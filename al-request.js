@@ -78,7 +78,7 @@ export function create(options) {
       }
     }
 
-    let res = await wx.request({
+    const res = await wx.request({
       method,
       url,
       data,
@@ -91,12 +91,8 @@ export function create(options) {
         setSession(res.data[updateKey]);
       }
     }
-
-    if (res.data && res.data.error) {
-      throw new Error(res.data.error);
-    }
-
-    return res.data;
+    
+    return res;
   }
 
   methods.forEach((method) => {
