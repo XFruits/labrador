@@ -33,6 +33,7 @@ function buildListItem(list: Array<$DataMap>, item: $DataMap): $DataMap {
 }
 
 module.exports = function createPage(ComponentClass: Class<Component>) {
+  const pageRoot = new ComponentClass({});
   let config = {};
   let page: $Page;
 
@@ -88,7 +89,6 @@ module.exports = function createPage(ComponentClass: Class<Component>) {
     page._show = false;
     page._ready = false;
     page._loadOptions = options;
-
     page.updateData = function (newData: Object) {
       // if (__DEV__) {
       //   console.log('%c%s updateData(%o)', 'color:#2a8f99', page.__route__, utils.getDebugObject(newData));
@@ -110,7 +110,7 @@ module.exports = function createPage(ComponentClass: Class<Component>) {
       page.setData(data);
     };
 
-    let root = page.root = new ComponentClass({});
+    let root = page.root = pageRoot;
     root._config = {};
     root.page = page;
 
@@ -125,6 +125,8 @@ module.exports = function createPage(ComponentClass: Class<Component>) {
       root.onLoad(options);
     }
   };
+
+  config.method = pageRoot;
 
   config.onReady = function () {
     page._ready = true;
