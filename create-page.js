@@ -33,7 +33,6 @@ function buildListItem(list: Array<$DataMap>, item: $DataMap): $DataMap {
 }
 
 module.exports = function createPage(ComponentClass: Class<Component>) {
-  const pageRoot = new ComponentClass({});
   let config = {};
   let page: $Page;
 
@@ -109,8 +108,8 @@ module.exports = function createPage(ComponentClass: Class<Component>) {
 
       page.setData(data);
     };
-
-    let root = page.root = pageRoot;
+    
+    let root = page.root = new ComponentClass({});
     root._config = {};
     root.page = page;
 
@@ -126,7 +125,7 @@ module.exports = function createPage(ComponentClass: Class<Component>) {
     }
   };
 
-  config.method = pageRoot;
+  config.method = new ComponentClass({});
 
   config.onReady = function () {
     page._ready = true;
